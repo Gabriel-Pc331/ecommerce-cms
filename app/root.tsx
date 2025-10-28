@@ -7,8 +7,16 @@ import {
   ScrollRestoration,
 } from "react-router";
 
-import type { Route } from "./+types/root";
 import "./app.css";
+
+export type Route = {
+  MetaArgs: {
+    params: Record<string, string>;
+    data: Record<string, any>;
+  };
+  LinksFunction: () => Array<{ rel: string; href: string }>;
+  ErrorBoundaryProps: { error: any };
+};
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -50,13 +58,18 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
 
+  const isDev =
+    typeof import.meta !== "undefined" &&
+    import.meta.env &&
+    Boolean((import.meta as any).env.DEV);
+
   if (isRouteErrorResponse(error)) {
     message = error.status === 404 ? "404" : "Error";
     details =
       error.status === 404
         ? "The requested page could not be found."
         : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
+  } else if (isDev && error && error instanceof Error) {
     details = error.message;
     stack = error.stack;
   }
