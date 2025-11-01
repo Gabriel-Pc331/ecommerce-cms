@@ -3,7 +3,9 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/in
 import { Plus, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Outlet, useNavigate } from "react-router-dom"
-import { BreadCrumb } from "@/components/layout/bread-crumb"
+import { BreadCrumb } from "@/components/layout/bread-crumb";
+
+
 
 export function CategoryLayout() {
 

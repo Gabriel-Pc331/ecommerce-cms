@@ -6,19 +6,22 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
 import "./app.css";
 
-export type Route = {
-  MetaArgs: {
-    params: Record<string, string>;
-    data: Record<string, any>;
-  };
-  LinksFunction: () => Array<{ rel: string; href: string }>;
-  ErrorBoundaryProps: { error: any };
+export type RouteMetaArgs = {
+  params: Record<string, string>;
+  data: Record<string, any>;
 };
 
-export const links: Route.LinksFunction = () => [
+export type LinkDescriptor = {
+  rel: string;
+  href: string;
+  crossOrigin?: string;
+};
+
+export type ErrorBoundaryProps = { error: any };
+
+export const links = (): LinkDescriptor[] => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -53,14 +56,14 @@ export default function App() {
   return <Outlet />;
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+export function ErrorBoundary({ error }: ErrorBoundaryProps) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
 
   const isDev =
     typeof import.meta !== "undefined" &&
-    import.meta.env &&
+    (import.meta as any).env &&
     Boolean((import.meta as any).env.DEV);
 
   if (isRouteErrorResponse(error)) {
@@ -69,7 +72,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       error.status === 404
         ? "The requested page could not be found."
         : error.statusText || details;
-  } else if (isDev && error && error instanceof Error) {
+  } else if (isDev && error instanceof Error) {
     details = error.message;
     stack = error.stack;
   }

@@ -3,5 +3,5 @@ export interface ProductDto {
   name: string;
   price: number;
   description?: string;
-  brandId?: string; // relacionamento opcional com Brand
+  brandId?: string; 
 }
