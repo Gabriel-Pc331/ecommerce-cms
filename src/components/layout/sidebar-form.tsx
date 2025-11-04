@@ -1,64 +1,94 @@
 import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
 } from "@/components/ui/sheet"
-import { Button } from "../ui/button";
-import { useLocation, useNavigate } from "react-router-dom";
-import type { ReactNode } from "react";
-
+import { Button } from "../ui/button"
+import { useLocation, useNavigate } from "react-router-dom"
+import type { ReactNode } from "react"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { Trash2 } from "lucide-react"
 
 type SidebarFormProps = {
-    title: string;
-    children: ReactNode;
-    onSave: () => void;
+  title: string
+  children: ReactNode
+  onSave?: () => void
+  onDelete?: () => void
+  loading?: boolean
 }
 
-export function SidebarForm({ title, children, onSave }: SidebarFormProps) {
+export function SidebarForm({
+  title,
+  children,
+  onSave,
+  loading = false,
+  onDelete,
+}: SidebarFormProps) {
+  const navigate = useNavigate()
+  const location = useLocation()
 
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    function handleCloseForm(open: boolean) {
-        if (!open) {
-            const currentPath = location.pathname; //-> /categories/new
-            const newPath = currentPath.substring(0, currentPath.lastIndexOf('/'))
-            navigate(newPath)
-        }
+  function handleCloseForm(open: boolean) {
+    if (!open) {
+      const currentPath = location.pathname
+      const newPath = currentPath.substring(0, currentPath.lastIndexOf("/"))
+      navigate(newPath)
     }
+  }
 
-    return (
-        <Sheet open={true} onOpenChange={handleCloseForm}>
-            <SheetContent>
-                <SheetHeader>
-                    <SheetTitle>{title}</SheetTitle>
-                    <SheetDescription>
-                        Preencha os campos abaixo e clique em Salvar.
-                    </SheetDescription>
-                </SheetHeader>
+  return (
+    <Sheet open={true} onOpenChange={handleCloseForm}>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>{title}</SheetTitle>
+          <SheetDescription>
+            Preencha os campos abaixo e clique em Salvar.
+          </SheetDescription>
+        </SheetHeader>
 
-                {children}
+        <div className="px-8 py-4 space-y-4">{children}</div>
 
-                <SheetFooter>
-                    <div className="flex flex-row gap-1">
+        <SheetFooter className="flex flex-row justify-between">
+          <div className="flex flex-row gap-1">
+            <Button onClick={onSave} disabled={loading}>
+              Salvar
+            </Button>
 
-                        <Button onClick={onSave}>
-                            Salvar
-                        </Button>
+            <SheetClose asChild>
+              <Button variant="outline" disabled={loading}>
+                Cancelar
+              </Button>
+            </SheetClose>
+          </div>
 
-                        <SheetClose asChild>
-                            <Button variant='outline'>
-                                Cancelar
-                            </Button>
-                        </SheetClose>
-
-                    </div>
-                </SheetFooter>
-            </SheetContent>
-        </Sheet>
-    )
+          {onDelete && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="destructive"
+                    size="icon"
+                    onClick={onDelete}
+                  >
+                    <Trash2 />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Remover o Registro</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  )
 }

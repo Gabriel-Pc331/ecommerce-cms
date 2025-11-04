@@ -1,22 +1,22 @@
-import { CategoryDataTable } from "./data-table/category-data-table"
+import { BrandDataTable } from "../data-table/brand-data-table"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
 import { Plus, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Outlet, useNavigate } from "react-router-dom"
 import { BreadCrumb } from "@/components/layout/bread-crumb"
 
-export function CategoryLayout() {
+export function BrandLayout() {
 
     const navigate = useNavigate();
 
     function handleCreate() {
-        navigate('categories/new')
+        navigate('brands/new')
     }
 
     return (
         <div className="p-4">
 
-            <BreadCrumb title="Categorias" />
+            <BreadCrumb title="Marcas" />
 
             <div className="flex-col py-4 gap-4">
 
@@ -34,7 +34,7 @@ export function CategoryLayout() {
                 </div>
 
                 <div>
-                    <CategoryDataTable />
+                    <BrandDataTable />
                     <Outlet />
                 </div>
 
