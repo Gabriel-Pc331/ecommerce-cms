@@ -4,15 +4,16 @@ import { useBrands } from "../../hooks/use-brand";
 
 export function BrandDataTable() {
 
-    const { data: brands, isLoading } = useBrands();
+    const {data: brands, isLoading} = useBrands();
 
     return (
         <div>
-            {isLoading ? (
+            { isLoading ? (
                 <p>Carregando...</p>
             ) : (
                 <DataTable columns={brandColumns} data={brands!} />
             )}
         </div>
+
     )
 }

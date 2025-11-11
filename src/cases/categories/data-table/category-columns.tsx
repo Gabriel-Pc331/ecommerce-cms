@@ -1,8 +1,8 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { CategoryDto } from "../../dtos/category.dto";
+import type { CategoryDTO } from "../../dtos/category.dto";
 import { DataTableAction } from "@/components/layout/data-table-actions";
 
-export const categoryColumns: ColumnDef<CategoryDto>[] = [
+export const categoryColumns: ColumnDef<CategoryDTO>[] = [
     {
         accessorKey: 'id',
         header: 'Id'
