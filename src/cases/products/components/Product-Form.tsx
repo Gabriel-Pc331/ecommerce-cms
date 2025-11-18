@@ -41,7 +41,7 @@ export function ProductForm() {
   const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as any,
     defaultValues: {
       name: "",
       description: "",
@@ -52,7 +52,7 @@ export function ProductForm() {
     },
   });
 
-  // Preenche o form ao editar
+  
   useEffect(() => {
     if (data) {
       form.reset({
@@ -77,7 +77,7 @@ export function ProductForm() {
     });
   };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof formSchema>): void {
     setLoading(true);
 
     const payload: ProductDTO = {
@@ -107,7 +107,7 @@ export function ProductForm() {
         },
       });
     }
-  };
+  }
 
   return (
     <SidebarForm
@@ -125,7 +125,7 @@ export function ProductForm() {
             </TabsList>
             <TabsContent value="geral" className="space-y-5">
               <FormField
-                control={form.control}
+                control={form.control as any}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
@@ -138,7 +138,7 @@ export function ProductForm() {
                 )}
               />
               <FormField
-                control={form.control}
+                control={form.control as any}
                 name="categoryId"
                 render={({ field }) => (
                   <FormItem className="w-full">
@@ -165,7 +165,7 @@ export function ProductForm() {
                 )}
               />
               <FormField
-                control={form.control}
+                control={form.control as any}
                 name="brandId"
                 render={({ field }) => (
                   <FormItem>
@@ -192,7 +192,7 @@ export function ProductForm() {
                 )}
               />
               <FormField
-                control={form.control}
+                control={form.control as any}
                 name="price"
                 render={({ field }) => (
                   <FormItem>
@@ -205,7 +205,7 @@ export function ProductForm() {
                 )}
               />
               <FormField
-                control={form.control}
+                control={form.control as any}
                 name="active"
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3">
@@ -221,7 +221,7 @@ export function ProductForm() {
             </TabsContent>
             <TabsContent value="description" className="space-y-5">
               <FormField
-                control={form.control}
+                control={form.control as any}
                 name="description"
                 render={({ field }) => (
                   <FormItem>

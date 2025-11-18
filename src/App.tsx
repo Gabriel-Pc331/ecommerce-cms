@@ -1,9 +1,12 @@
 import { Routes, Route } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
+
 import { CategoryLayout } from "./cases/categories/components/category-layout";
 import { CategoryForm } from "./cases/categories/components/category-form";
+
 import { BrandLayout } from "./cases/brands/components/brand-layout";
 import { BrandForm } from "./cases/brands/components/brand-Form";
+
 import { ProductLayout } from "./cases/products/components/Product-layout";
 import { ProductForm } from "./cases/products/components/Product-Form";
 
